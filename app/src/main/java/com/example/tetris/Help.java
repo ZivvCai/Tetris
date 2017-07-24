@@ -14,9 +14,9 @@ public class Help extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.help);
-//        ActionBar actionBar = getSupportActionBar();
-//        if(actionBar != null)
-//            actionBar.hide();
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null)
+            actionBar.hide();
         Button help_back = (Button)findViewById(R.id.help_back);
         help_back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -17,7 +17,7 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
         if (actionBar != null)
             actionBar.hide();
         Button start = (Button) findViewById(R.id.start);
-        Button difficulty = (Button) findViewById(R.id.difficulty);
+        Button difficulty = (Button) findViewById(R.id.btn_exit);
         Button max_score = (Button) findViewById(R.id.max_score);
         Button help = (Button) findViewById(R.id.help);
         start.setOnClickListener(this);
@@ -33,7 +33,7 @@ public class Start extends AppCompatActivity implements View.OnClickListener {
                 Intent startIntent = new Intent(Start.this, Main.class);
                 startActivity(startIntent);
                 break;
-            case R.id.difficulty:
+            case R.id.btn_exit:
                 break;
             case R.id.max_score:
                 break;
