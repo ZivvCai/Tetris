@@ -32,7 +32,7 @@ public class Main extends AppCompatActivity {
 
     public ShowNextBlockView nextBlockView;
 
-    public ImageView back_image;
+//    public ImageView back_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,7 +55,7 @@ public class Main extends AppCompatActivity {
         maxScore = (TextView)findViewById(R.id.maxScore);
         level = (TextView)findViewById(R.id.level);
         speed = (TextView)findViewById(R.id.speed);
-        back_image = (ImageView)findViewById(R.id.back_image);
+//        back_image = (ImageView)findViewById(R.id.back_image);
         scoreValue = maxScoreValue =0;
         levelValue = speedValue = 1;
         score.setText(scoreString + scoreValue);
@@ -132,32 +132,13 @@ public class Main extends AppCompatActivity {
             }
         });
 
-//        down.setOnClickListener(new View.OnClickListener() {
+//        back_image.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
-//                float final_Y = TetrisView.max_y - BlockUnit.UNITSIZE - TetrisView.beginPoint;
-//                TetrisBlock decBlock = new TetrisBlock(view.getFallingBlock().getX(),final_Y);
-//                while(decBlock.checkCollision_Other()){
-//                    final_Y -= BlockUnit.UNITSIZE;
-//                    decBlock.setY(final_Y);
-//                }
-//                view.getFallingBlock().setY(decBlock.getY());
-//                runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        view.invalidate();
-//                    }
-//                });
+//                Intent intent = new Intent(Main.this,Start.class);
+//                startActivity(intent);
 //            }
 //        });
-
-        back_image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Main.this,Start.class);
-                startActivity(intent);
-            }
-        });
 
         view.setFather(this);
         view.invalidate();

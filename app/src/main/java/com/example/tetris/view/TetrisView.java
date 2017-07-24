@@ -157,17 +157,15 @@ public class TetrisView extends View {
 
         isRun = true;        //游戏正在运行
 
+        // 游戏主线程
         dropThread = new Thread(new Runnable() {
-            /*
-             * 游戏主线程
-             */
             @Override
             public void run() {
                 while (isRun) {
                     if (flag) {
                         try {
                             //初始化各参数
-                            Thread.sleep(100);
+                            Thread.sleep(1000);
                             h = getHeight();
                             w = getWidth();
                             beginX = (int) ((w - beginPoint) / 100) * 50 + beginPoint;
@@ -306,36 +304,36 @@ public class TetrisView extends View {
 
                                 for (TetrisBlock b : blocks) {
                                     //判断游戏是否应该结束
-                                    if (b.getY() <= BlockUnit.UNITSIZE)
-                                        isRun = false;
-                                }
-                                if (!isRun) {
-                                    //游戏结束
-
-                                    father.runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
-                                            AlertDialog.Builder dialog = new AlertDialog.Builder(father);
-                                            dialog.setTitle("游戏结束");
-                                            String score = "得分：";
-                                            int s = father.scoreValue;
-                                            dialog.setMessage(score + s);
-                                            dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                    for (BlockUnit u : b.getUnits())
+                                        if (u.getY() <= BlockUnit.UNITSIZE) {
+                                            //Game over
+                                            isRun = false;
+                                            father.runOnUiThread(new Runnable() {
                                                 @Override
-                                                public void onClick(DialogInterface dialog, int which) {
+                                                public void run() {
+                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
+                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(father);
+                                                    dialog.setTitle("游戏结束");
+                                                    String score = "得分：";
+                                                    int s = father.scoreValue;
+                                                    dialog.setMessage(score + s);
+                                                    dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
 
+                                                        }
+                                                    });
+                                                    dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialog, int which) {
+
+                                                        }
+                                                    });
+//                                                    if (!father.isFinishing())
+                                                    dialog.show();
                                                 }
                                             });
-                                            dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-
-                                                }
-                                            });
-                                            dialog.show();
                                         }
-                                    });
                                 }
                             }
                         });
