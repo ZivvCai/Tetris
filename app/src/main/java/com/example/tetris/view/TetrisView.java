@@ -12,6 +12,7 @@ import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.tetris.Main;
@@ -88,6 +89,14 @@ public class TetrisView extends View {
         blocks.clear();
         thread = new Thread();
         fallingBlock = null;
+        flag = true;
+        father.runOnUiThread(new Runnable() {
+            @Override
+            //更新UI
+            public void run() {
+                TetrisView.this.invalidate();
+            }
+        });
     }
 
     @Override
@@ -319,40 +328,50 @@ public class TetrisView extends View {
                                         if (u.getY() <= BlockUnit.UNITSIZE) {
                                             //Game over
                                             isRun = false;
-                                            father.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
+
+                                        }
+                                }
+                                if(!isRun){
+                                    try{
+                                        dropThread.wait();
+                                    }catch (Exception e){
+                                        e.printStackTrace();
+                                    }
+                                    father.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
 //                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
-                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(father);
-                                                    dialog.setTitle("游戏结束");
-                                                    int s = father.scoreValue;
-                                                    dialog.setIcon(R.drawable.ic_launcher);
-                                                    dialog.setMessage("得分" + s);
-                                                    dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            int sc = father.scoreValue;
-                                                            if (sc > load()) {
-                                                                save("最高分" + sc);
-                                                            }
-                                                            Intent intent = new Intent(father, Start.class);
-                                                            father.startActivity(intent);
-                                                        }
-                                                    });
-                                                    dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            int sc = father.scoreValue;
-                                                            if (sc > load()) {
-                                                                save("最高分" + sc);
-                                                            }
-                                                        }
-                                                    });
-                                                    if (!father.isFinishing())
-                                                        dialog.show();
+                                            AlertDialog.Builder dialog = new AlertDialog.Builder(father);
+                                            dialog.setTitle("游戏结束");
+                                            int s = father.scoreValue;
+                                            dialog.setIcon(R.drawable.ic_launcher);
+                                            dialog.setMessage("得分" + s);
+                                            dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    int sc = father.scoreValue;
+                                                    if (sc > load()) {
+                                                        save("最高分" + sc);
+                                                    }
+                                                    Intent intent = new Intent(father, Start.class);
+                                                    father.startActivity(intent);
                                                 }
                                             });
+                                            dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    int sc = father.scoreValue;
+                                                    if (sc > load()) {
+                                                        save("最高分" + sc);
+                                                    }
+                                                    clear();
+                                                    init();
+                                                }
+                                            });
+                                            if (!father.isFinishing())
+                                                dialog.show();
                                         }
+                                    });
                                 }
                             }
                         });
