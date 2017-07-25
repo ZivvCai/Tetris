@@ -52,12 +52,11 @@ public class Main extends BaseActivity {
         maxScore = (TextView) findViewById(R.id.maxScore);
         level = (TextView) findViewById(R.id.level);
         speed = (TextView) findViewById(R.id.speed);
-        scoreValue = maxScoreValue = 0;
+        scoreValue = 0;
         levelValue = speedValue = 1;
         score.setText(scoreString + scoreValue);
         level.setText(levelString + levelValue);
         speed.setText(speedString + speedValue);
-        maxScore.setText(maxScoreString + maxScoreValue);
         view.init();
 
         //设置各按钮的监听器
@@ -129,6 +128,7 @@ public class Main extends BaseActivity {
 
         view.setFather(this);
         view.invalidate();
-
+        maxScoreValue = view.load();
+        maxScore.setText(maxScoreString + maxScoreValue);
     }
 }

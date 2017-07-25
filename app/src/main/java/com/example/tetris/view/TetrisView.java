@@ -15,11 +15,19 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.tetris.Main;
+import com.example.tetris.MaxScore;
 import com.example.tetris.R;
 import com.example.tetris.Start;
 import com.example.tetris.model.BlockUnit;
 import com.example.tetris.model.TetrisBlock;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -188,6 +196,8 @@ public class TetrisView extends View {
                     }
                     if (thread.getState() == Thread.State.TERMINATED || thread.getState() == Thread.State.NEW) {
                         //如果线程新创建或者已经结束，则重新创建新线程
+
+                        father.maxScoreValue = load();
                         thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -220,7 +230,7 @@ public class TetrisView extends View {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
                                     try {
-                                        Thread.sleep(currentSpeed);
+                                        Thread.sleep(100);
 
                                         //更新相应坐标值
                                         ty = fallingBlock.getY();
@@ -315,25 +325,31 @@ public class TetrisView extends View {
 //                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
                                                     AlertDialog.Builder dialog = new AlertDialog.Builder(father);
                                                     dialog.setTitle("游戏结束");
-                                                    dialog.setIcon(R.drawable.ic_launcher);
-                                                    String score = "得分：";
                                                     int s = father.scoreValue;
-                                                    dialog.setMessage(score + s);
+                                                    dialog.setIcon(R.drawable.ic_launcher);
+                                                    dialog.setMessage("得分" + s);
                                                     dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
-                                                            Intent intent = new Intent(father,Start.class);
+                                                            int sc = father.scoreValue;
+                                                            if (sc > load()) {
+                                                                save("最高分" + sc);
+                                                            }
+                                                            Intent intent = new Intent(father, Start.class);
                                                             father.startActivity(intent);
                                                         }
                                                     });
                                                     dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
-
+                                                            int sc = father.scoreValue;
+                                                            if (sc > load()) {
+                                                                save("最高分" + sc);
+                                                            }
                                                         }
                                                     });
-//                                                    if (!father.isFinishing())
-                                                    dialog.show();
+                                                    if (!father.isFinishing())
+                                                        dialog.show();
                                                 }
                                             });
                                         }
@@ -423,4 +439,46 @@ public class TetrisView extends View {
         this.father = father;
     }
 
+    public void save(String inputText) {
+        FileOutputStream out = null;
+        BufferedWriter writer = null;
+        try {
+            out = father.openFileOutput("record", Context.MODE_PRIVATE);
+            writer = new BufferedWriter(new OutputStreamWriter(out));
+            writer.write(inputText);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (writer != null) {
+                    writer.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public int load() {
+        FileInputStream in = null;
+        BufferedReader reader = null;
+        int score = 0;
+        try {
+            in = father.openFileInput("record");
+            reader = new BufferedReader(new InputStreamReader(in));
+            String scoreString = reader.readLine();
+            score = Integer.parseInt(scoreString.substring(4));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return score;
+    }
 }
