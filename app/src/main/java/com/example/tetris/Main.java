@@ -20,7 +20,7 @@ import com.example.tetris.view.TetrisView;
  */
 
 public class Main extends BaseActivity {
-    public Button left, right, rotate, speedUp;   //按钮
+    public Button left, right, rotate, speedUp, pause;   //按钮
 
     public TextView score, maxScore, level, speed;       //标签
 
@@ -46,6 +46,7 @@ public class Main extends BaseActivity {
         right = (Button) findViewById(R.id.right);                //右移
         rotate = (Button) findViewById(R.id.rotate);                //旋转
         speedUp = (Button) findViewById(R.id.speedUp);            //加速
+        pause = (Button) findViewById(R.id.pause);
         nextBlockView = (ShowNextBlockView) findViewById(R.id.nextBlockView);
         nextBlockView.invalidate();
         score = (TextView) findViewById(R.id.score);
@@ -123,6 +124,17 @@ public class Main extends BaseActivity {
                             view.invalidate();
                         }
                     });
+                }
+            }
+        });
+
+        pause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    view.dropThread.wait();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         });

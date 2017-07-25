@@ -18,10 +18,10 @@
             android:orientation="vertical">
 
             <com.example.tetris.view.TetrisView
-            android:id="@+id/tetrisView"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+                android:id="@+id/tetrisView"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -72,15 +72,20 @@
                     android:text="最高分："
                     android:textSize="13sp" />
 
+                <Button
+                    android:id="@+id/pause"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="pause" />
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="100dp"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/left"
@@ -96,15 +101,15 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/right_btn"/>
+            android:background="@drawable/right_btn" />
 
         <Button
             android:id="@+id/speedUp"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_margin="10dp"
-            android:background="@drawable/speedup_btn"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:background="@drawable/speedup_btn" />
 
         <Button
             android:id="@+id/rotate"
@@ -112,7 +117,7 @@
             android:layout_height="60dp"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/rotate_btn"/>
+            android:background="@drawable/rotate_btn" />
     </LinearLayout>
 
 
