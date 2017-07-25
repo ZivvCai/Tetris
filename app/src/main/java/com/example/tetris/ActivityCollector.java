@@ -23,7 +23,6 @@ public class ActivityCollector {
     }
 
     public static void finishAll(){
-        Log.d("ActivityCollector","finishAll");
         for(Activity activity:activities){
             if(!activity.isFinishing()){
                 activity.finish();

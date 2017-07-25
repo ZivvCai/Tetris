@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.tetris.Main;
+import com.example.tetris.R;
 import com.example.tetris.Start;
 import com.example.tetris.model.BlockUnit;
 import com.example.tetris.model.TetrisBlock;
@@ -311,16 +312,18 @@ public class TetrisView extends View {
                                             father.runOnUiThread(new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
+//                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
                                                     AlertDialog.Builder dialog = new AlertDialog.Builder(father);
                                                     dialog.setTitle("游戏结束");
+                                                    dialog.setIcon(R.drawable.ic_launcher);
                                                     String score = "得分：";
                                                     int s = father.scoreValue;
                                                     dialog.setMessage(score + s);
-                                                    dialog.setNegativeButton("Exit", new DialogInterface.OnClickListener() {
+                                                    dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
-
+                                                            Intent intent = new Intent(father,Start.class);
+                                                            father.startActivity(intent);
                                                         }
                                                     });
                                                     dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {

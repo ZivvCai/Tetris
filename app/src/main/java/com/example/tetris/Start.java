@@ -1,9 +1,11 @@
 package com.example.tetris;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -35,8 +37,22 @@ public class Start extends BaseActivity implements View.OnClickListener {
                 startActivity(startIntent);
                 break;
             case R.id.btn_exit:
-                Log.d("StartActivity","btn_exit");
-                ActivityCollector.finishAll();
+                AlertDialog.Builder dialog = new AlertDialog.Builder(Start.this);
+                dialog.setTitle("确定要退出吗？");
+                dialog.setIcon(R.drawable.ic_launcher);
+                dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        ActivityCollector.finishAll();
+                    }
+                });
+                dialog.show();
                 break;
             case R.id.max_score:
                 break;
@@ -47,5 +63,25 @@ public class Start extends BaseActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(Start.this);
+        dialog.setTitle("确定要退出吗？");
+        dialog.setIcon(R.drawable.ic_launcher);
+        dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ActivityCollector.finishAll();
+            }
+        });
+        dialog.show();
     }
 }
