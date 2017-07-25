@@ -80,6 +80,14 @@ public class TetrisView extends View {
         blocks.clear();
         thread = new Thread();
         fallingBlock = null;
+        flag = true;
+        father.runOnUiThread(new Runnable() {
+            //更新ui
+            @Override
+            public void run() {
+                TetrisView.this.invalidate();
+            }
+        });
     }
 
     @Override
@@ -220,7 +228,7 @@ public class TetrisView extends View {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
                                     try {
-                                        Thread.sleep(currentSpeed);
+                                        Thread.sleep(10);
 
                                         //更新相应坐标值
                                         ty = fallingBlock.getY();
@@ -309,34 +317,43 @@ public class TetrisView extends View {
                                         if (u.getY() <= BlockUnit.UNITSIZE) {
                                             //Game over
                                             isRun = false;
-                                            father.runOnUiThread(new Runnable() {
-                                                @Override
-                                                public void run() {
+                                        }
+                                }
+                                if (!isRun) {
+                                    try {
+                                        dropThread.wait();
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    father.runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
 //                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
-                                                    AlertDialog.Builder dialog = new AlertDialog.Builder(father);
-                                                    dialog.setTitle("游戏结束");
-                                                    dialog.setIcon(R.drawable.ic_launcher);
-                                                    String score = "得分：";
-                                                    int s = father.scoreValue;
-                                                    dialog.setMessage(score + s);
-                                                    dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            Intent intent = new Intent(father,Start.class);
-                                                            father.startActivity(intent);
-                                                        }
-                                                    });
-                                                    dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-
-                                                        }
-                                                    });
-//                                                    if (!father.isFinishing())
-                                                    dialog.show();
+                                            AlertDialog.Builder dialog = new AlertDialog.Builder(father);
+                                            dialog.setTitle("游戏结束");
+                                            dialog.setCancelable(false);
+                                            dialog.setIcon(R.drawable.ic_launcher);
+                                            String score = "得分：";
+                                            int s = father.scoreValue;
+                                            dialog.setMessage(score + s);
+                                            dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Intent intent = new Intent(father, Start.class);
+                                                    father.startActivity(intent);
                                                 }
                                             });
+                                            dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    clear();
+                                                    init();
+                                                }
+                                            });
+                                            if (!father.isFinishing())
+                                                dialog.show();
                                         }
+                                    });
                                 }
                             }
                         });
