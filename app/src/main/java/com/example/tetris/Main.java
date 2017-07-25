@@ -19,7 +19,7 @@ import com.example.tetris.view.TetrisView;
  * Created by Administrator on 2017/7/20.
  */
 
-public class Main extends AppCompatActivity {
+public class Main extends BaseActivity {
     public Button left, right, rotate, speedUp;   //按钮
 
     public TextView score, maxScore, level, speed;       //标签
