@@ -24,7 +24,7 @@
         android:layout_below="@id/start"
         android:layout_marginTop="33dp"
         android:background="@drawable/background_btn"
-        android:text="最高记录"
+        android:text="最高纪录"
         android:textSize="25sp" />
 
     <Button
