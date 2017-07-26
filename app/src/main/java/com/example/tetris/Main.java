@@ -57,6 +57,9 @@ public class Main extends BaseActivity {
         score.setText(scoreString + scoreValue);
         level.setText(levelString + levelValue);
         speed.setText(speedString + speedValue);
+        view.setFather(this);
+        maxScoreValue = view.load();
+        maxScore.setText(maxScoreString + maxScoreValue);
         view.init();
 
         //设置各按钮的监听器
@@ -126,9 +129,6 @@ public class Main extends BaseActivity {
             }
         });
 
-        view.setFather(this);
         view.invalidate();
-        maxScoreValue = view.load();
-        maxScore.setText(maxScoreString + maxScoreValue);
     }
 }

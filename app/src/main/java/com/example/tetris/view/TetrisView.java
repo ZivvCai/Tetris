@@ -10,6 +10,7 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
@@ -235,11 +236,11 @@ public class TetrisView extends View {
 
                                 canMove = true; //俄罗斯方块开始下落
 
-                                while (dropCount - fallingBlock.getY() <= 2 * BlockUnit.UNITSIZE) {
+                                while (dropCount - fallingBlock.getY() <= BlockUnit.UNITSIZE) {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
                                     try {
-                                        Thread.sleep(100);
+                                        Thread.sleep(300);
 
                                         //更新相应坐标值
                                         ty = fallingBlock.getY();
@@ -286,6 +287,7 @@ public class TetrisView extends View {
                                         }
                                         if (father.scoreValue > father.maxScoreValue) {
                                             father.maxScoreValue = father.scoreValue;
+                                            save("最高分:"+father.maxScoreValue);
                                         }
 
                                         //将被消去行上的所有俄罗斯方块向下移动一行
@@ -328,7 +330,6 @@ public class TetrisView extends View {
                                         if (u.getY() <= BlockUnit.UNITSIZE) {
                                             //Game over
                                             isRun = false;
-
                                         }
                                 }
                                 if(!isRun){
@@ -340,7 +341,6 @@ public class TetrisView extends View {
                                     father.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-//                                                    Toast.makeText(father, "game over", Toast.LENGTH_SHORT).show();
                                             AlertDialog.Builder dialog = new AlertDialog.Builder(father);
                                             dialog.setTitle("游戏结束");
                                             int s = father.scoreValue;
@@ -349,10 +349,6 @@ public class TetrisView extends View {
                                             dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    int sc = father.scoreValue;
-                                                    if (sc > load()) {
-                                                        save("最高分" + sc);
-                                                    }
                                                     Intent intent = new Intent(father, Start.class);
                                                     father.startActivity(intent);
                                                 }
@@ -360,10 +356,6 @@ public class TetrisView extends View {
                                             dialog.setPositiveButton("重新开始", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    int sc = father.scoreValue;
-                                                    if (sc > load()) {
-                                                        save("最高分" + sc);
-                                                    }
                                                     clear();
                                                     init();
                                                 }
@@ -486,7 +478,7 @@ public class TetrisView extends View {
             in = father.openFileInput("record");
             reader = new BufferedReader(new InputStreamReader(in));
             String scoreString = reader.readLine();
-            score = Integer.parseInt(scoreString.substring(4));
+            score = Integer.parseInt(scoreString.substring(3));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {

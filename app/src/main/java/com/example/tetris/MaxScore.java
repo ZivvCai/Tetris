@@ -3,6 +3,7 @@ package com.example.tetris;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
@@ -23,24 +24,28 @@ public class MaxScore extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.maxscore);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.hide();
+        }
         TextView record = (TextView) findViewById(R.id.record);
         FileInputStream in = null;
         BufferedReader reader = null;
         StringBuilder content = new StringBuilder();
-        try{
+        try {
             in = openFileInput("record");
             reader = new BufferedReader(new InputStreamReader(in));
-            String line ="";
-            while ((line = reader.readLine())!=null){
+            String line = "";
+            while ((line = reader.readLine()) != null) {
                 content.append(line);
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
-        }finally {
-            if(reader!=null){
+        } finally {
+            if (reader != null) {
                 try {
                     reader.close();
-                }catch (IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
