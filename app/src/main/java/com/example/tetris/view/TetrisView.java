@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.tetris.FileControl;
 import com.example.tetris.Main;
 import com.example.tetris.MaxScore;
 import com.example.tetris.R;
@@ -45,6 +46,8 @@ public class TetrisView extends View {
      */
 
     boolean flag;
+
+    public static int difficultyType = 0;//难度类型
 
     public static int beginPoint = 10;  //网格开始坐标值，横纵坐标的开始值都是此值
 
@@ -91,10 +94,16 @@ public class TetrisView extends View {
         thread = new Thread();
         fallingBlock = null;
         flag = true;
+        //重置初始得分，等级和速度
+        father.scoreValue = 0;
+        father.levelValue = father.speedValue = 1;
         father.runOnUiThread(new Runnable() {
             @Override
             //更新UI
             public void run() {
+                father.score.setText(father.scoreString + father.scoreValue);
+                father.speed.setText(father.speedString + father.speedValue);
+                father.level.setText(father.levelString + father.levelValue);
                 TetrisView.this.invalidate();
             }
         });
@@ -207,7 +216,6 @@ public class TetrisView extends View {
                     if (thread.getState() == Thread.State.TERMINATED || thread.getState() == Thread.State.NEW) {
                         //如果线程新创建或者已经结束，则重新创建新线程
 
-                        father.maxScoreValue = load();
                         thread = new Thread(new Runnable() {
                             @Override
                             public void run() {
@@ -287,7 +295,11 @@ public class TetrisView extends View {
                                         }
                                         if (father.scoreValue > father.maxScoreValue) {
                                             father.maxScoreValue = father.scoreValue;
-                                            save("最高分:"+father.maxScoreValue);
+                                            if (difficultyType == 1) {
+                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "easy");
+                                            } else if (difficultyType == 2) {
+                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "hard");
+                                            }
                                         }
 
                                         //将被消去行上的所有俄罗斯方块向下移动一行
@@ -332,10 +344,10 @@ public class TetrisView extends View {
                                             isRun = false;
                                         }
                                 }
-                                if(!isRun){
-                                    try{
+                                if (!isRun) {
+                                    try {
                                         dropThread.wait();
-                                    }catch (Exception e){
+                                    } catch (Exception e) {
                                         e.printStackTrace();
                                     }
                                     father.runOnUiThread(new Runnable() {
@@ -450,46 +462,4 @@ public class TetrisView extends View {
         this.father = father;
     }
 
-    public void save(String inputText) {
-        FileOutputStream out = null;
-        BufferedWriter writer = null;
-        try {
-            out = father.openFileOutput("record", Context.MODE_PRIVATE);
-            writer = new BufferedWriter(new OutputStreamWriter(out));
-            writer.write(inputText);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (writer != null) {
-                    writer.close();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public int load() {
-        FileInputStream in = null;
-        BufferedReader reader = null;
-        int score = 0;
-        try {
-            in = father.openFileInput("record");
-            reader = new BufferedReader(new InputStreamReader(in));
-            String scoreString = reader.readLine();
-            score = Integer.parseInt(scoreString.substring(4));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return score;
-    }
 }
