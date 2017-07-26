@@ -28,10 +28,12 @@ public class MaxScore extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.hide();
         }
-        TextView record = (TextView) findViewById(R.id.record);
+        TextView recordEasy = (TextView) findViewById(R.id.record_easy);
+        TextView recordHard = (TextView) findViewById(R.id.record_hard);
         String easy = FileControl.getInstance().onlyReadFile("easy",MaxScore.this);
         String hard = FileControl.getInstance().onlyReadFile("hard",MaxScore.this);
-        record.setText(easy + hard);
+        recordEasy.setText("简单 "+easy);
+        recordHard.setText("困难 "+hard);
     }
 
 }

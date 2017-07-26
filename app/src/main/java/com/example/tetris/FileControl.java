@@ -105,14 +105,14 @@ public class FileControl{
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        if (reader != null) {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
+    }
         return scoreString;
     }
 
