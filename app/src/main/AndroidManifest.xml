@@ -27,6 +27,8 @@
         <activity android:name=".BaseActivity"/>
         <activity android:name=".MaxScore"
             android:launchMode="singleTask"/>
+        <activity android:name=".DifficultyChoose"
+            android:launchMode="singleTask"/>
     </application>
 
 </manifest>

@@ -478,7 +478,7 @@ public class TetrisView extends View {
             in = father.openFileInput("record");
             reader = new BufferedReader(new InputStreamReader(in));
             String scoreString = reader.readLine();
-            score = Integer.parseInt(scoreString.substring(3));
+            score = Integer.parseInt(scoreString.substring(4));
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
