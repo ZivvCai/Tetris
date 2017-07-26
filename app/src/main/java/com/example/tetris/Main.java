@@ -59,9 +59,9 @@ public class Main extends BaseActivity {
         speed.setText(speedString + speedValue);
         view.setFather(this);
         if (TetrisView.difficultyType == 1)
-            maxScoreValue = FileControl.getInstance().loadFile("easy");
+            maxScoreValue = FileControl.getInstance().loadFile("easy",Main.this);
         else if (TetrisView.difficultyType == 2)
-            maxScoreValue = FileControl.getInstance().loadFile("hard");
+            maxScoreValue = FileControl.getInstance().loadFile("hard",Main.this);
         maxScore.setText(maxScoreString + maxScoreValue);
         view.init();
 

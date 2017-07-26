@@ -35,26 +35,8 @@ public class Start extends BaseActivity implements View.OnClickListener {
         max_score.setOnClickListener(this);
         help.setOnClickListener(this);
 
-        File file = new File("/data/data/com.example.tetris/files/record");
-        if(!file.exists()){
-            FileOutputStream out = null;
-            BufferedWriter writer = null;
-            try {
-                out = openFileOutput("record", Context.MODE_PRIVATE);
-                writer = new BufferedWriter(new OutputStreamWriter(out));
-                writer.write("最高分："+0);
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                try {
-                    if (writer != null) {
-                        writer.close();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+        FileControl.getInstance().fileExist("/data/data/com.example.tetris/files/easy", "easy", Start.this);
+        FileControl.getInstance().fileExist("/data/data/com.example.tetris/files/hard", "hard", Start.this);
     }
 
     @Override

@@ -296,9 +296,9 @@ public class TetrisView extends View {
                                         if (father.scoreValue > father.maxScoreValue) {
                                             father.maxScoreValue = father.scoreValue;
                                             if (difficultyType == 1) {
-                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "easy");
+                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "easy",father);
                                             } else if (difficultyType == 2) {
-                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "hard");
+                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "hard",father);
                                             }
                                         }
 

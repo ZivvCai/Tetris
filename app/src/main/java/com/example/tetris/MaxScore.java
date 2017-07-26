@@ -29,28 +29,9 @@ public class MaxScore extends AppCompatActivity {
             actionBar.hide();
         }
         TextView record = (TextView) findViewById(R.id.record);
-        FileInputStream in = null;
-        BufferedReader reader = null;
-        StringBuilder content = new StringBuilder();
-        try {
-            in = openFileInput("easy");
-            reader = new BufferedReader(new InputStreamReader(in));
-            String line = "";
-            while ((line = reader.readLine()) != null) {
-                content.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                try {
-                    reader.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        record.setText(content.toString());
+        String easy = FileControl.getInstance().onlyReadFile("easy",MaxScore.this);
+        String hard = FileControl.getInstance().onlyReadFile("hard",MaxScore.this);
+        record.setText(easy + hard);
     }
 
 }
