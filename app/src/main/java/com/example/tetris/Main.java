@@ -53,7 +53,7 @@ public class Main extends BaseActivity {
         level = (TextView) findViewById(R.id.level);
         speed = (TextView) findViewById(R.id.speed);
         scoreValue = 0;
-        levelValue = speedValue = 1;
+        levelValue = speedValue = (TetrisView.difficultyType-1)*10;
         score.setText(scoreString + scoreValue);
         level.setText(levelString + levelValue);
         speed.setText(speedString + speedValue);
