@@ -96,7 +96,7 @@ public class TetrisView extends View {
         flag = true;
         //重置初始得分，等级和速度
         father.scoreValue = 0;
-        father.levelValue = father.speedValue = 1;
+        father.levelValue = father.speedValue = (difficultyType-1)*10;
         father.runOnUiThread(new Runnable() {
             @Override
             //更新UI
@@ -177,7 +177,10 @@ public class TetrisView extends View {
          */
         dropSpeed = 300;     //俄罗斯方块下落线程默认休眠时间
 
-        currentSpeed = 300;  //俄罗斯方块下落线程当前休眠时间
+        if (difficultyType == 1)
+            currentSpeed = 300;  //俄罗斯方块下落线程当前休眠时间
+        else
+            currentSpeed = 100;
 
         Arrays.fill(map, 0); //每行网格中包含俄罗斯方块单元的个数全部初始化为0
 
@@ -248,7 +251,7 @@ public class TetrisView extends View {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
                                     try {
-                                        Thread.sleep(300);
+                                        Thread.sleep(currentSpeed);
 
                                         //更新相应坐标值
                                         ty = fallingBlock.getY();
@@ -281,26 +284,13 @@ public class TetrisView extends View {
                                     }
                                 }
 
-                                //每行最大个数
-                                int full = (int) ((w - beginPoint) / BlockUnit.UNITSIZE);
+                                //每行最大个数  ， 记录每次清除的行数
+                                int full = (int) ((w - beginPoint) / BlockUnit.UNITSIZE), count = 0;
 
                                 for (int i = 0; i <= end; i++) {
                                     if (map[i] >= full) {
-                                        //若某行达到最大个数则消去此行并更新分数等级等信息
-
-                                        father.scoreValue += 100;
-                                        if (father.scoreValue > 1000) {
-                                            father.speedValue += 1;
-                                            father.levelValue += 1;
-                                        }
-                                        if (father.scoreValue > father.maxScoreValue) {
-                                            father.maxScoreValue = father.scoreValue;
-                                            if (difficultyType == 1) {
-                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "easy",father);
-                                            } else if (difficultyType == 2) {
-                                                FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "hard",father);
-                                            }
-                                        }
+                                        //记录消去行数
+                                        count++;
 
                                         //将被消去行上的所有俄罗斯方块向下移动一行
                                         map[i] = 0;
@@ -321,20 +311,47 @@ public class TetrisView extends View {
                                                     u.setY(u.getY() + BlockUnit.UNITSIZE);
                                             }
                                         }
-
-                                        father.runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                //更新ui
-                                                father.score.setText(father.scoreString + father.scoreValue);
-                                                father.maxScore.setText(father.maxScoreString + father.maxScoreValue);
-                                                father.speed.setText(father.speedString + father.speedValue);
-                                                father.level.setText(father.levelString + father.levelValue);
-                                                TetrisView.this.invalidate();
-                                            }
-                                        });
                                     }
                                 }
+
+                                switch (count) {
+                                    case 1:
+                                        father.scoreValue += 50;
+                                        break;
+                                    case 2:
+                                        father.scoreValue += 110;
+                                        break;
+                                    case 3:
+                                        father.scoreValue += 180;
+                                        break;
+                                    case 4:
+                                        father.scoreValue += 260;
+                                        break;
+                                }
+                                if (currentSpeed > 100) {
+                                    father.speedValue = father.scoreValue / 1000 + 1;
+                                    father.levelValue = father.scoreValue / 1000 + 1;
+                                    currentSpeed = 300 - father.speedValue * 20;
+                                }
+                                if (father.scoreValue > father.maxScoreValue) {
+                                    father.maxScoreValue = father.scoreValue;
+                                    if (difficultyType == 1) {
+                                        FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "easy", father);
+                                    } else if (difficultyType == 2) {
+                                        FileControl.getInstance().saveFile("最高分:" + father.maxScoreValue, "hard", father);
+                                    }
+                                }
+                                father.runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        //更新ui
+                                        father.score.setText(father.scoreString + father.scoreValue);
+                                        father.level.setText(father.levelString + father.levelValue);
+                                        father.speed.setText(father.speedString + father.speedValue);
+                                        father.maxScore.setText(father.maxScoreString + father.maxScoreValue);
+                                        TetrisView.this.invalidate();
+                                    }
+                                });
 
                                 for (TetrisBlock b : blocks) {
                                     //判断游戏是否应该结束

@@ -36,12 +36,12 @@ public class DifficultyChoose extends AppCompatActivity implements View.OnClickL
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_easy_mode:
-                intent = new Intent(DifficultyChoose.this, Main.class);
                 TetrisView.difficultyType = 1;
+                intent = new Intent(DifficultyChoose.this,Main.class);
                 break;
             case R.id.btn_hard_mode:
-                intent = new Intent(DifficultyChoose.this, Main.class);
                 TetrisView.difficultyType = 2;
+                intent = new Intent(DifficultyChoose.this,Main.class);
                 break;
             default:
         }
