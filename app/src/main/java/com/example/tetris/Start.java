@@ -61,7 +61,7 @@ public class Start extends BaseActivity implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.start:
-                Intent startIntent = new Intent(Start.this, Main.class);
+                Intent startIntent = new Intent(Start.this, DifficultyChoose.class);
                 startActivity(startIntent);
                 break;
             case R.id.btn_exit:

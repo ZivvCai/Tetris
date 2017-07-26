@@ -462,46 +462,4 @@ public class TetrisView extends View {
         this.father = father;
     }
 
-//    public void save(String inputText, String filename) {
-//        FileOutputStream out = null;
-//        BufferedWriter writer = null;
-//        try {
-//            out = father.openFileOutput(filename, Context.MODE_PRIVATE);
-//            writer = new BufferedWriter(new OutputStreamWriter(out));
-//            writer.write(inputText);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            try {
-//                if (writer != null) {
-//                    writer.close();
-//                }
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-//
-//    public int load(String filename) {
-//        FileInputStream in = null;
-//        BufferedReader reader = null;
-//        int score = 0;
-//        try {
-//            in = father.openFileInput(filename);
-//            reader = new BufferedReader(new InputStreamReader(in));
-//            String scoreString = reader.readLine();
-//            score = Integer.parseInt(scoreString.substring(4));
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (reader != null) {
-//                try {
-//                    reader.close();
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
-//        return score;
-//    }
 }
