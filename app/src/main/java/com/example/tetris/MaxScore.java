@@ -33,7 +33,7 @@ public class MaxScore extends AppCompatActivity {
         BufferedReader reader = null;
         StringBuilder content = new StringBuilder();
         try {
-            in = openFileInput("record");
+            in = openFileInput("easy");
             reader = new BufferedReader(new InputStreamReader(in));
             String line = "";
             while ((line = reader.readLine()) != null) {

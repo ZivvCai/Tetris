@@ -55,8 +55,6 @@ public class Start extends BaseActivity implements View.OnClickListener {
                 }
             }
         }
-
-
     }
 
     @Override
