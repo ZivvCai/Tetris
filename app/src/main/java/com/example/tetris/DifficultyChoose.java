@@ -13,7 +13,7 @@ import com.example.tetris.view.TetrisView;
  * Created by 博凯 on 2017.7.26.
  */
 
-public class DifficultyChoose extends AppCompatActivity implements View.OnClickListener {
+public class DifficultyChoose extends BaseActivity implements View.OnClickListener {
 
     private Button btn_easymode, btn_hardmode;
     private Intent intent;

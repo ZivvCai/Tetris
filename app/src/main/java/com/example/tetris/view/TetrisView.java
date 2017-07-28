@@ -1,6 +1,7 @@
 package com.example.tetris.view;
 
 import android.app.Activity;
+import android.app.Notification;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,6 +9,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -33,6 +35,8 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.logging.Handler;
+import java.util.logging.LogRecord;
 
 /**
  * Created by Administrator on 2017/7/21.
@@ -46,6 +50,8 @@ public class TetrisView extends View {
      */
 
     boolean flag;
+
+    public final static int CLEAR = 1;
 
     public static int difficultyType = 0;//难度类型
 
@@ -71,7 +77,7 @@ public class TetrisView extends View {
 
     private TetrisBlock fallingBlock;   //正在下落的俄罗斯方块
 
-    private Thread thread = new Thread();//俄罗斯方块下落线程
+    public Thread thread = new Thread();//俄罗斯方块下落线程
 
     private float x1, y1, x2, y2;       //保存onTouchEvent中的起始坐标和结束坐标
 
@@ -101,10 +107,9 @@ public class TetrisView extends View {
             @Override
             //更新UI
             public void run() {
-                father.score.setText(father.scoreString + father.scoreValue);
-                father.speed.setText(father.speedString + father.speedValue);
-                father.level.setText(father.levelString + father.levelValue);
-                TetrisView.this.invalidate();
+                Message msg = new Message();
+                msg.what = CLEAR;
+                father.handler.sendMessage(msg);
             }
         });
     }
@@ -211,7 +216,9 @@ public class TetrisView extends View {
                             //更新ui
                             @Override
                             public void run() {
-                                father.nextBlockView.invalidate();
+                                Message msg = new Message();
+                                msg.what = 2;
+                                father.handler.sendMessage(msg);
                             }
                         });
                         flag = false; //下次循环不在执行此块操作
@@ -233,7 +240,9 @@ public class TetrisView extends View {
                                     //更新ui
                                     @Override
                                     public void run() {
-                                        father.nextBlockView.invalidate();
+                                        Message msg = new Message();
+                                        msg.what = 3;
+                                        father.handler.sendMessage(msg);
                                     }
                                 });
 
@@ -250,24 +259,28 @@ public class TetrisView extends View {
                                 while (dropCount - fallingBlock.getY() <= BlockUnit.UNITSIZE) {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
-                                    try {
-                                        Thread.sleep(currentSpeed);
+                                    if(!father.isPause) {
+                                        try {
+                                            Thread.sleep(currentSpeed);
 
-                                        //更新相应坐标值
-                                        ty = fallingBlock.getY();
-                                        ty = ty + BlockUnit.UNITSIZE;
-                                        dropCount += BlockUnit.UNITSIZE;
-                                        fallingBlock.setY(ty);
+                                            //更新相应坐标值
+                                            ty = fallingBlock.getY();
+                                            ty = ty + BlockUnit.UNITSIZE;
+                                            dropCount += BlockUnit.UNITSIZE;
+                                            fallingBlock.setY(ty);
 
-                                        father.runOnUiThread(new Runnable() {
-                                            //更新ui
-                                            @Override
-                                            public void run() {
-                                                TetrisView.this.invalidate();
-                                            }
-                                        });
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
+                                            father.runOnUiThread(new Runnable() {
+                                                //更新ui
+                                                @Override
+                                                public void run() {
+                                                    Message msg = new Message();
+                                                    msg.what = 4;
+                                                    father.handler.sendMessage(msg);
+                                                }
+                                            });
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
                                 }
                                 canMove = false;//俄罗斯方块结束下落
@@ -345,11 +358,9 @@ public class TetrisView extends View {
                                     @Override
                                     public void run() {
                                         //更新ui
-                                        father.score.setText(father.scoreString + father.scoreValue);
-                                        father.level.setText(father.levelString + father.levelValue);
-                                        father.speed.setText(father.speedString + father.speedValue);
-                                        father.maxScore.setText(father.maxScoreString + father.maxScoreValue);
-                                        TetrisView.this.invalidate();
+                                        Message msg = new Message();
+                                        msg.what = 5;
+                                        father.handler.sendMessage(msg);
                                     }
                                 });
 
@@ -362,11 +373,11 @@ public class TetrisView extends View {
                                         }
                                 }
                                 if (!isRun) {
-                                    try {
-                                        dropThread.wait();
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+//                                    try {
+//                                        dropThread.wait();
+//                                    } catch (Exception e) {
+//                                        e.printStackTrace();
+//                                    }
                                     father.runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -406,7 +417,6 @@ public class TetrisView extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         super.onDraw(canvas);
         max_x = getWidth();
         max_y = getHeight();
