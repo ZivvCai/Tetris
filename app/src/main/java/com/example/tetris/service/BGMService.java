@@ -9,6 +9,8 @@ import com.example.tetris.R;
 
 public class BGMService extends Service {
 
+    //背景音乐服务
+
     private MediaPlayer mediaPlayer;
 
     public BGMService() {

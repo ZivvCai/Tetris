@@ -5,7 +5,7 @@
     android:background="@drawable/start_background">
 
     <CheckBox
-        android:id="@+id/model_checkbox"
+        android:id="@+id/mode_checkbox"
         android:layout_width="200dp"
         android:layout_height="45dp"
         android:text="夜间模式"

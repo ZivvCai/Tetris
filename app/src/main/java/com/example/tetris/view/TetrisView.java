@@ -326,7 +326,7 @@ public class TetrisView extends View {
                                         }
                                     }
                                 }
-
+                                //根据消去行数统计得分
                                 switch (count) {
                                     case 1:
                                         father.scoreValue += 50;
@@ -383,9 +383,8 @@ public class TetrisView extends View {
                                         public void run() {
                                             AlertDialog.Builder dialog = new AlertDialog.Builder(father);
                                             dialog.setTitle("游戏结束");
-                                            int s = father.scoreValue;
                                             dialog.setIcon(R.drawable.ic_launcher);
-                                            dialog.setMessage("得分" + s);
+                                            dialog.setMessage("得分" + father.scoreValue);
                                             dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
@@ -420,7 +419,11 @@ public class TetrisView extends View {
         super.onDraw(canvas);
         max_x = getWidth();
         max_y = getHeight();
-        canvas.drawColor(Color.WHITE);
+        if(Start.NIGHT_flag) {
+            canvas.drawColor(Color.BLACK);
+        }else{
+            canvas.drawColor(Color.WHITE);
+        }
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);

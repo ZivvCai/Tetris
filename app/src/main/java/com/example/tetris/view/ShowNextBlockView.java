@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import com.example.tetris.Start;
 import com.example.tetris.model.BlockUnit;
 import com.example.tetris.model.TetrisBlock;
 
@@ -36,7 +37,11 @@ public class ShowNextBlockView extends View {
         super.onDraw(canvas);
 
         //画布画笔初始化
-        canvas.drawColor(Color.WHITE);
+        if(Start.NIGHT_flag) {
+            canvas.drawColor(Color.BLACK);
+        }else{
+            canvas.drawColor(Color.WHITE);
+        }
         Paint paint = new Paint();
         paint.setAntiAlias(true);
         paint.setStyle(Paint.Style.FILL);

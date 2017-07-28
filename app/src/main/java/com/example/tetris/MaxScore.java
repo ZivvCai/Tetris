@@ -25,6 +25,7 @@ import java.io.OutputStreamWriter;
 
 public class MaxScore extends BaseActivity implements View.OnClickListener{
 
+    //显示最高纪录，通过点击纪录选择是否重置纪录
     private TextView recordEasy;
     private TextView recordHard;
 

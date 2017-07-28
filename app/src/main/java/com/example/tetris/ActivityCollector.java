@@ -11,6 +11,7 @@ import java.util.List;
  */
 
 public class ActivityCollector {
+    //对所有活动进行统一的管理
 
     public static List<Activity> activities = new ArrayList<>();
 

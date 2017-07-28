@@ -2,6 +2,7 @@ package com.example.tetris;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Message;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.tetris.model.BlockUnit;
@@ -24,7 +26,7 @@ import com.example.tetris.view.TetrisView;
 
 public class Main extends BaseActivity {
 
-    public static boolean isPause = false;
+    public static boolean isPause = false;//判断是否暂停标识
 
     public Button left, right, rotate, speedUp, pause;   //按钮
 
@@ -34,10 +36,13 @@ public class Main extends BaseActivity {
 
     public String scoreString = "分数：", maxScoreString = "最高分：", levelString = "等级：", speedString = "速度：";
 
+    private LinearLayout viewLayout,btnLayout;//布局背景设置
+
     public TetrisView view;
 
     public ShowNextBlockView nextBlockView;
 
+    //通过异步消息处理机制在父进程更新UI
     public android.os.Handler handler = new android.os.Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -99,14 +104,16 @@ public class Main extends BaseActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.hide();
-        isPause = false;
+        isPause = false;//暂停初始为false
         // 获取各组件和标签值
         view = (TetrisView) findViewById(R.id.tetrisView);
         left = (Button) findViewById(R.id.left);                    //左移
         right = (Button) findViewById(R.id.right);                //右移
         rotate = (Button) findViewById(R.id.rotate);                //旋转
         speedUp = (Button) findViewById(R.id.speedUp);            //加速
-        pause = (Button) findViewById(R.id.pause);
+        pause = (Button) findViewById(R.id.pause);                //暂停
+        viewLayout = (LinearLayout)findViewById(R.id.view_layout);
+        btnLayout = (LinearLayout)findViewById(R.id.btn_layout);
         nextBlockView = (ShowNextBlockView) findViewById(R.id.nextBlockView);
         nextBlockView.invalidate();
         score = (TextView) findViewById(R.id.score);
@@ -115,6 +122,10 @@ public class Main extends BaseActivity {
         speed = (TextView) findViewById(R.id.speed);
         scoreValue = 0;
         levelValue = speedValue = (TetrisView.difficultyType - 1) * 10;
+        if(levelValue == 0){
+            levelValue++;
+            speedValue++;
+        }
         score.setText(scoreString + scoreValue);
         level.setText(levelString + levelValue);
         speed.setText(speedString + speedValue);
@@ -125,6 +136,22 @@ public class Main extends BaseActivity {
             maxScoreValue = FileControl.getInstance().loadFile("hard", Main.this);
         maxScore.setText(maxScoreString + maxScoreValue);
         view.init();
+        //判断是否为夜间模式，修改相应布局的设置
+        if(Start.NIGHT_flag){
+            viewLayout.setBackgroundColor(Color.BLACK);
+            btnLayout.setBackgroundColor(Color.BLACK);
+            score.setTextColor(Color.BLUE);
+            level.setTextColor(Color.BLUE);
+            speed.setTextColor(Color.BLUE);
+            maxScore.setTextColor(Color.BLUE);
+        }else{
+            viewLayout.setBackgroundColor(Color.WHITE);
+            btnLayout.setBackgroundColor(Color.WHITE);
+            score.setTextColor(Color.BLACK);
+            level.setTextColor(Color.BLACK);
+            speed.setTextColor(Color.BLACK);
+            maxScore.setTextColor(Color.BLACK);
+        }
 
         //设置各按钮的监听器
         left.setOnClickListener(new View.OnClickListener() {

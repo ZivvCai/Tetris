@@ -22,7 +22,9 @@ import java.io.OutputStreamWriter;
 
 public class Start extends BaseActivity implements View.OnClickListener {
 
-    public static boolean BGM_flag = true;
+    public static boolean BGM_flag = true;//判断是否开启背景音乐
+
+    public static boolean NIGHT_flag = false;//判断是否开启夜间模式
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,6 +33,7 @@ public class Start extends BaseActivity implements View.OnClickListener {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null)
             actionBar.hide();
+        //判断是否需要开启背景音乐
         if(BGM_flag){
             startService(new Intent(Start.this, BGMService.class));
         }

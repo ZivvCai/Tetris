@@ -12,6 +12,8 @@ import com.example.tetris.service.BGMService;
  */
 
 public class BaseActivity extends AppCompatActivity{
+
+    //所有活动的父类，方便管理所有活动
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -5,6 +5,7 @@
 
 
     <LinearLayout
+        android:id="@+id/view_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="5280"
@@ -74,15 +75,17 @@
 
                 <Button
                     android:id="@+id/pause"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pause"/>
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/pause_btn"/>
 
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/btn_layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="100dp">
