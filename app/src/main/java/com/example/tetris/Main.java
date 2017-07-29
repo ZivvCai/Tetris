@@ -140,10 +140,10 @@ public class Main extends BaseActivity {
         if(Start.NIGHT_flag){
             viewLayout.setBackgroundColor(Color.BLACK);
             btnLayout.setBackgroundColor(Color.BLACK);
-            score.setTextColor(Color.BLUE);
-            level.setTextColor(Color.BLUE);
-            speed.setTextColor(Color.BLUE);
-            maxScore.setTextColor(Color.BLUE);
+            score.setTextColor(Color.LTGRAY);
+            level.setTextColor(Color.LTGRAY);
+            speed.setTextColor(Color.LTGRAY);
+            maxScore.setTextColor(Color.LTGRAY);
         }else{
             viewLayout.setBackgroundColor(Color.WHITE);
             btnLayout.setBackgroundColor(Color.WHITE);

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/btn_pause_resume"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="resume" />
+
+    <Button
+        android:id="@+id/btn_pause_backstart"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btn_pause_resume"
+        android:layout_below="@id/btn_pause_resume"
+        android:layout_marginTop="33dp"
+        android:text="backtostart" />
+
+    <Button
+        android:id="@+id/btn_pause_backchoose"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btn_pause_resume"
+        android:layout_below="@id/btn_pause_backstart"
+        android:layout_marginTop="33dp"
+        android:text="backtochoose" />
+
+    <Button
+        android:id="@+id/btn_pause_exit"
+        android:layout_width="155dp"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@id/btn_pause_resume"
+        android:layout_below="@id/btn_pause_backchoose"
+        android:layout_marginTop="33dp"
+        android:text="exit" />
+
+</RelativeLayout>
