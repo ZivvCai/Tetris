@@ -455,7 +455,11 @@ public class TetrisView extends View {
                 canvas.drawRoundRect(rel, 8, 8, paint);
             }
         }
-        paint.setColor(Color.LTGRAY);
+        if(Start.NIGHT_flag){
+            paint.setColor(Color.GRAY);
+        }else {
+            paint.setColor(Color.LTGRAY);
+        }
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(3);
 
