@@ -26,9 +26,9 @@ import com.example.tetris.view.TetrisView;
 
 public class Main extends BaseActivity {
 
-    public static boolean isPause = false;//判断是否暂停标识
+    public static boolean isPause = false , isBottom = false;//判断是否暂停标识
 
-    public Button left, right, rotate, speedUp, pause;   //按钮
+    public Button left, right, rotate, speedUp, pause, down;   //按钮
 
     public TextView score, maxScore, level, speed;       //标签
 
@@ -107,11 +107,12 @@ public class Main extends BaseActivity {
         isPause = false;//暂停初始为false
         // 获取各组件和标签值
         view = (TetrisView) findViewById(R.id.tetrisView);
-        left = (Button) findViewById(R.id.left);                    //左移
+        left = (Button) findViewById(R.id.left);                  //左移
         right = (Button) findViewById(R.id.right);                //右移
-        rotate = (Button) findViewById(R.id.rotate);                //旋转
+        rotate = (Button) findViewById(R.id.rotate);              //旋转
         speedUp = (Button) findViewById(R.id.speedUp);            //加速
         pause = (Button) findViewById(R.id.pause);                //暂停
+        down = (Button) findViewById(R.id.btn_down);              //到底
         viewLayout = (LinearLayout)findViewById(R.id.view_layout);
         btnLayout = (LinearLayout)findViewById(R.id.btn_layout);
         nextBlockView = (ShowNextBlockView) findViewById(R.id.nextBlockView);
@@ -204,7 +205,12 @@ public class Main extends BaseActivity {
                 });
             }
         });
-
+        down.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isBottom = true;
+            }
+        });
         speedUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

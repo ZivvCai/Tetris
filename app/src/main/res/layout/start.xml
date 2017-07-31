@@ -7,64 +7,64 @@
     android:weightSum="1">
 
     <Button
-        android:id="@+id/max_score"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:background="@drawable/background_btn"
-        android:text="最高纪录"
-        android:textSize="25sp"
-        android:layout_below="@+id/start"
-        android:layout_alignLeft="@+id/start"
-        android:layout_alignStart="@+id/start"
-        android:layout_marginTop="27dp" />
-
-    <Button
-        android:id="@+id/btn_exit"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="21dp"
-        android:background="@drawable/background_btn"
-        android:text="退出游戏"
-        android:textSize="25sp"
-        android:layout_below="@+id/help"
-        android:layout_alignLeft="@+id/max_score"
-        android:layout_alignStart="@+id/max_score" />
-
-    <Button
-        android:id="@+id/setting"
-        android:layout_width="200dp"
-        android:layout_height="45dp"
-        android:background="@drawable/background_btn"
-        android:text="设置"
-        android:textSize="25sp"
-        android:layout_below="@+id/btn_exit"
-        android:layout_marginTop="24dp"
-        android:layout_alignRight="@+id/btn_exit"
-        android:layout_alignEnd="@+id/btn_exit"
-        android:layout_alignLeft="@+id/btn_exit"
-        android:layout_alignStart="@+id/btn_exit" />
-
-    <Button
         android:id="@+id/start"
         android:layout_width="200dp"
         android:layout_height="45dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="170dp"
         android:background="@drawable/background_btn"
         android:text="开始游戏"
-        android:textSize="25sp"
-        android:layout_marginTop="158dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/max_score"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignLeft="@+id/start"
+        android:layout_alignStart="@+id/start"
+        android:layout_below="@+id/start"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/background_btn"
+        android:text="最高纪录"
+        android:textSize="25sp" />
 
     <Button
         android:id="@+id/help"
         android:layout_width="200dp"
         android:layout_height="45dp"
+        android:layout_alignLeft="@+id/btn_exit"
+        android:layout_alignStart="@+id/btn_exit"
+        android:layout_below="@+id/max_score"
+        android:layout_marginTop="25dp"
         android:background="@drawable/background_btn"
         android:text="游戏帮助"
-        android:textSize="25sp"
-        android:layout_marginTop="31dp"
-        android:layout_below="@+id/max_score"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/setting"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignEnd="@+id/btn_exit"
         android:layout_alignLeft="@+id/btn_exit"
-        android:layout_alignStart="@+id/btn_exit" />
+        android:layout_alignRight="@+id/btn_exit"
+        android:layout_alignStart="@+id/btn_exit"
+        android:layout_below="@+id/help"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/background_btn"
+        android:text="游戏设置"
+        android:textSize="25sp" />
+
+    <Button
+        android:id="@+id/btn_exit"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignLeft="@+id/max_score"
+        android:layout_alignStart="@+id/max_score"
+        android:layout_below="@+id/setting"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/background_btn"
+        android:text="退出游戏"
+        android:textSize="25sp" />
 
 </RelativeLayout>
