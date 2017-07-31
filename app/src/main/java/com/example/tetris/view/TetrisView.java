@@ -102,7 +102,7 @@ public class TetrisView extends View {
         flag = true;
         //重置初始得分，等级和速度
         father.scoreValue = 0;
-        father.levelValue = father.speedValue = (difficultyType-1)*10;
+        father.levelValue = father.speedValue = (difficultyType - 1) * 10;
         father.runOnUiThread(new Runnable() {
             @Override
             //更新UI
@@ -259,9 +259,10 @@ public class TetrisView extends View {
                                 while (dropCount - fallingBlock.getY() <= BlockUnit.UNITSIZE) {
                                     //若dropCount即y坐标的理想值与y坐标的准确值相差不到两个方块的大小，
                                     // 说明俄罗斯方块仍在下落，否则说明发生触碰事件，停止下落，跳出循环
-                                    if(!father.isPause) {
+                                    if (!father.isPause) {
                                         try {
-                                            Thread.sleep(currentSpeed);
+                                            if (!father.isBottom)
+                                                Thread.sleep(currentSpeed);
 
                                             //更新相应坐标值
                                             ty = fallingBlock.getY();
@@ -284,6 +285,7 @@ public class TetrisView extends View {
                                     }
                                 }
                                 canMove = false;//俄罗斯方块结束下落
+                                father.isBottom = false;
 
                                 blocks.add(fallingBlock); //将俄罗斯方块加入静止的俄罗斯方块数组中
 
@@ -419,9 +421,9 @@ public class TetrisView extends View {
         super.onDraw(canvas);
         max_x = getWidth();
         max_y = getHeight();
-        if(Start.NIGHT_flag) {
+        if (Start.NIGHT_flag) {
             canvas.drawColor(Color.BLACK);
-        }else{
+        } else {
             canvas.drawColor(Color.WHITE);
         }
         Paint paint = new Paint();
@@ -455,9 +457,9 @@ public class TetrisView extends View {
                 canvas.drawRoundRect(rel, 8, 8, paint);
             }
         }
-        if(Start.NIGHT_flag){
+        if (Start.NIGHT_flag) {
             paint.setColor(Color.GRAY);
-        }else {
+        } else {
             paint.setColor(Color.LTGRAY);
         }
         paint.setStyle(Paint.Style.STROKE);
