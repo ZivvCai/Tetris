@@ -385,6 +385,7 @@ public class TetrisView extends View {
                                         public void run() {
                                             AlertDialog.Builder dialog = new AlertDialog.Builder(father);
                                             dialog.setTitle("游戏结束");
+                                            dialog.setCancelable(false);
                                             dialog.setIcon(R.drawable.ic_launcher);
                                             dialog.setMessage("得分" + father.scoreValue);
                                             dialog.setNegativeButton("退出", new DialogInterface.OnClickListener() {

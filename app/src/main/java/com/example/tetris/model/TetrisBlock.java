@@ -85,6 +85,7 @@ public class TetrisBlock implements Cloneable {
         this.blockType = other.blockType;
         this.blocks = other.blocks;
     }
+
     public void remove(int j){
         /*
          *删除在第j行上的方块单元
